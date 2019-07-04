@@ -1,131 +1,65 @@
-<template>
-  <section class="login">
-    <div class="box">
-      <div class="input last">
-        <input 
-          type="text" 
-          maxlength="50" 
-          v-model.trim="accessToken" 
-          placeholder="Access Token"
-        />
-      </div>
-      <div class="get-access-token">
-        <a href="https://cnodejs.org/setting" target="_blank">如何获取Access Token？</a>
-      </div>
-      <div class="submit user-select-none" @click="handleLogin">Sign in</div>
-    </div>
-  </section>
-</template>
-
-<script>
-import { serviceLogin } from '@/services';
-import { login, state } from '@/store';
-import { value, onCreated } from 'vue-function-api';
-
-export default {
-  name: 'Login',
-  setup(props, ctx) {
-    const accessToken = value(window.localStorage.save_access_token || '');
-
-    const hasAccessToken = () => {
-      if (state.accessToken) {
-        ctx.root.$router.replace('/');
-      }
-    };
-
-    const handleLogin = () => {
-      if (!accessToken.value) return ctx.root.$Message.warning('Access Token不能为空');
-      serviceLogin({ accesstoken: accessToken.value })
-      .then(res => {
-        if (res.data.success) {
-          login({
-            accessToken: accessToken.value,
-            userInfo: res.data,
-          });
-          ctx.root.$router.replace('/');
-        }
-      });
-    };
-
-    onCreated(() => {
-      hasAccessToken();
-    });
-
-    return {
-      accessToken,
-      hasAccessToken,
-      handleLogin
+<style scoped>
+    .layout{
+        border: 1px solid #d7dde4;
+        background: #f5f7f9;
+        position: relative;
+        border-radius: 4px;
+        overflow: hidden;
     }
-  }
-}
-</script>
-
-<style lang="scss">
-.login {
-
-  .box {
-    width: 300px;
-    margin: 80px auto;
-    padding: 70px 20px;
-    background: #444;
-    border-radius: 3px;
-  }
-
-  .get-access-token {
-    margin-top: 10px;
-
-    a {
-      color: #fff;
-
-      &:hover {
-        text-decoration: underline;
-      }
+    .layout-logo{
+        width: 100px;
+        height: 30px;
+        background: #5b6270;
+        border-radius: 3px;
+        float: left;
+        position: relative;
+        top: 15px;
+        left: 20px;
     }
-  }
-
-  .input {
-    height: 45px;
-
-    input {
-      width: 100%;
-      height: 100%;
-      padding: 0 0 0 8px;
-      box-sizing: border-box;
-      font-size: 16px;
+    .layout-nav{
+        width: 420px;
+        margin: 0 auto;
+        margin-right: 20px;
     }
-  }
-
-  .last input {
-    border-radius: 0 0 5px 5px;
-  }
-
-  .submit {
-    position: relative;
-    margin-top: 15px;
-    padding: 10px 0;
-    background: #f9671e;
-    color: #fff;
-    text-align: center;
-    border-radius: 5px;
-    font-size: 16px;
-    font-weight: 500;
-    cursor: pointer;
-
-    &:after {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: #000;
-      border-radius: 5px;
-      opacity: 0;
+    .layout-footer-center{
+        text-align: center;
     }
-
-    &:active:after {
-      opacity: .2;
-    }
-  }
-}
 </style>
+<template>
+    <div class="layout">
+        <Layout>
+            <Header :style="{position: 'fixed', width: '100%'}">
+                <Menu mode="horizontal" theme="dark" active-name="1">
+                    <div class="layout-logo"></div>
+                    <div class="layout-nav">
+                        <MenuItem name="1">
+                            <Icon type="ios-navigate"></Icon>
+                            Item 1
+                        </MenuItem>
+                        <MenuItem name="2">
+                            <Icon type="ios-keypad"></Icon>
+                            Item 2
+                        </MenuItem>
+                        <MenuItem name="3">
+                            <Icon type="ios-analytics"></Icon>
+                            Item 3
+                        </MenuItem>
+                        <MenuItem name="4">
+                            <Icon type="ios-paper"></Icon>
+                            Item 4
+                        </MenuItem>
+                    </div>
+                </Menu>
+            </Header>
+            <Content :style="{margin: '88px 20px 0', background: '#fff', minHeight: '900px'}">
+                Content
+            </Content>
+            <Footer class="layout-footer-center">网站备案/许可证号：鲁ICP备09897989号 Copyright@2015-2030海尔集团 All Right Resevivel&copy;</Footer>
+        </Layout>
+    </div>
+</template>
+<script>
+    export default {
+        
+    }
+</script>
