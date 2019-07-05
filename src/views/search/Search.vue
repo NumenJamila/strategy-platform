@@ -13,7 +13,6 @@
 // @ means "src"
 import Main from "@/components/main";
 import tabItemBar from "@/components/tabItemBar";
-import SearchResultToolBar from "@/components/searchBar/SearchResultToolBar.vue";
 import SearchResultItem from "@/components/searchBar/SearchResultItem.vue";
 // import DB from "@/data/search.json";
 export default {
@@ -25,7 +24,6 @@ export default {
     };
   },
   components: {
-    SearchResultToolBar,
     SearchResultItem,
     Main,
     tabItemBar
@@ -43,14 +41,17 @@ export default {
       this.$router.push({name: url});
     },
     tabClick(e) {
-      let that = this
-      console.log(e)
+      let that = this;
+      console.log(e);
       that.goUrl(e)
     },
   }
 };
 </script>
 <style>
+.search-page {
+  height: 950px;
+}
 .ivu-tabs-bar {
   border-bottom: 0 !important;
 }

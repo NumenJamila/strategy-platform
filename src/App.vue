@@ -19,11 +19,12 @@ export default {
 html,
 body {
   .size;
-  overflow: hidden;
+  overflow-y: hidden;
   margin: 0;
   padding: 0;
 }
 #app {
   .size;
+  min-width: 900px;
 }
 </style>

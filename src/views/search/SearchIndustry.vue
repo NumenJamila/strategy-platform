@@ -13,7 +13,6 @@
 // @ means "src"
 import Main from "@/components/main";
 import tabItemBar from "@/components/tabItemBar";
-import SearchResultToolBar from "@/components/searchBar/SearchResultToolBar.vue";
 import SearchResultItem from "@/components/searchBar/SearchResultItem.vue";
 // import DB from "@/data/search.json";
 export default {
@@ -25,7 +24,6 @@ export default {
     };
   },
   components: {
-    SearchResultToolBar,
     SearchResultItem,
     Main,
     tabItemBar

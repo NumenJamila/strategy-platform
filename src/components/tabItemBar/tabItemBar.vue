@@ -21,7 +21,7 @@ export default {
   props: {
     whichItem: {
       type: String,
-      default: "Search"
+      default: ""
     }
   },
 
