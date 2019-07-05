@@ -1,6 +1,7 @@
 <template>
   <div class="wrapper">
-    <span class="logo logo-blue">H</span>
+    <img src="@/assets/img/logo-search.png" alt="">
+    <!-- <span class="logo logo-blue">H</span>
     <span class="logo logo-red">a</span>
     <span class="logo logo-green">i</span>
     <span class="logo logo-blue">e</span>
@@ -10,13 +11,16 @@
     <span class="logo logo-green">a</span>
     <span class="logo logo-red">r</span>
     <span class="logo logo-green">c</span>
-    <span class="logo logo-blue">h</span>
+    <span class="logo logo-blue">h</span> -->
   </div>
 </template>
 
 <style lang="less" scoped>
 .wrapper {
   width: 650px;
+  img {
+    width: 300px;
+  }
 }
 .logo {
   font-size: 3em;

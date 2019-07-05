@@ -10,13 +10,7 @@ export default new Router({
 		{
 			path: '/',
 			name: 'Index',
-			redirect: '/index',
-			component: Main,
-			children: [{
-				path: '/index',
-				name: 'home',
-				component: () => import('@/views/index/Index')
-			}]
+			component: () => import('@/views/index/Index')
 		},
 		{
 			name: 'Login',
@@ -27,6 +21,31 @@ export default new Router({
 			name: 'Search',
 			path: '/search',
 			component: () => import('@/views/search/Search'),
+		},
+		{
+			name: 'SearchCompany',
+			path: '/searchcompany',
+			component: () => import('@/views/search/SearchCompany'),
+		},
+		{
+			name: 'SearchIndustry',
+			path: '/searchindustry',
+			component: () => import('@/views/search/SearchIndustry'),
+		},
+		{
+			name: 'SearchPolicy',
+			path: '/searchpolicy',
+			component: () => import('@/views/search/SearchPolicy'),
+		},
+		{
+			name: 'SearchRegion',
+			path: '/searchregion',
+			component: () => import('@/views/search/SearchRegion'),
+		},
+		{
+			name: 'SearchReport',
+			path: '/searchreport',
+			component: () => import('@/views/search/SearchReport'),
 		},
 		{
 			name: 'NotMatch',

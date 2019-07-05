@@ -14,7 +14,7 @@ export default {
   },
   methods: {
     doSearch() {
-      this.$router.push({ path:'/search'  })
+      this.$emit('doSearch', this.searchText )
     }
   }
 };

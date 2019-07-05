@@ -21,7 +21,7 @@ export default {
     return {
       msg: this.$route.params.searchText,
       searchResultList: [],
-      whichItem: "Search"
+      whichItem: "SearchPolicy"
     };
   },
   components: {
