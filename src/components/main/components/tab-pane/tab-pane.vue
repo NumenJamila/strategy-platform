@@ -40,4 +40,7 @@ export default {
     line-height: 50px !important;
     border: 0 !important;
 }
+.ivu-menu-horizontal.ivu-menu-light:after {
+    height: 0px;
+}
 </style>

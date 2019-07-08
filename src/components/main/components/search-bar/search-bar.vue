@@ -41,17 +41,18 @@ export default {
   height: 100%;
 }
 .logo {
-  height: 26px;
+  // height: 26px;
+  width: 120px;
   vertical-align: middle;
   margin-right: 20px;
 }
 .input-search {
   outline: none;
-  width: 200px;
-  height: 36px;
-  line-height: 36px;
+  width: 300px;
+  height: 30px;
+  line-height: 30px;
   box-sizing: border-box;
-  border: 1px solid #dfe1e5;
+  border: 1px solid #32beff;
   // vertical-align: top;
   vertical-align: middle;
   font-size: 1.2em;
@@ -61,10 +62,10 @@ export default {
 .btn-search {
   outline: none;
   width: 50px;
-  height: 36px;
-  line-height: 36px;
+  height: 30px;
+  line-height: 30px;
   box-sizing: border-box;
-  background-color: #3388ff;
+  background-color: #32beff;
   // vertical-align: top;
   vertical-align: middle;
   color: #fff;
