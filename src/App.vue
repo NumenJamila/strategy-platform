@@ -5,10 +5,9 @@
 </template>
 
 <script>
-
 export default {
-  name: 'app',
-}
+  name: "app"
+};
 </script>
 
 <style lang="less">
@@ -19,12 +18,11 @@ export default {
 html,
 body {
   .size;
-  overflow-y: hidden;
+  overflow: hidden;
   margin: 0;
   padding: 0;
 }
 #app {
   .size;
-  min-width: 1000px;
 }
 </style>

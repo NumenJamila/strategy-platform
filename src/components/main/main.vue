@@ -2,7 +2,7 @@
   <Layout style="height: 100%" class="main">
     <Layout>
       <Header class="header-con">
-        <div class="header-bar">
+        <div class="header-bar customize-container-center">
           <SearchBar @doSearch="doSearch(e)" v-if="searchBar"></SearchBar>
           <div class="custom-content-con">
             <user
@@ -89,20 +89,13 @@ export default {
     float: right;
     height: auto;
     padding-right: 20px;
-    line-height: 50px;
+    line-height: 56px;
     & > *{
       float: right;
     }
   }
 }
-.ivu-layout-header {
-  height: 50px !important;
-  line-height: 50px !important;
-}
 
-.ivu-menu-horizontal {
-  height: 50px !important;
-  line-height: 50px !important;
-  border: 0 !important;
-}
+
+
 </style>

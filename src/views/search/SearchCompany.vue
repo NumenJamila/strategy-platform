@@ -1,6 +1,6 @@
 <template>
   <Main searchBar>
-    <div class="search-page">
+    <div class="search-page customize-container-center">
       <tabItemBar :whichItem="whichItem" @tabClick="tabClick" class="tab-pane-class"></tabItemBar>
       <Layout>
         <Layout>
@@ -97,6 +97,46 @@ export default {
             "在进行页面布局时，边框是我们最常用的的属性之一我们可以通过边框查看元素位置大小等但是有时我们却又不希望看到这些边框，一些元素的默认边框，比如input标签等我们可以选择隐藏或者去除",
           companyLogo:
             "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1105402388,3234073623&fm=11&gp=0.jpg"
+        },
+        {
+          companyName: "惠州巨合",
+          tagName: ["战略合作伙伴", "电商", "物联网"],
+          companyDesc:
+            "在进行页面布局时，边框是我们最常用的的属性之一我们可以通过边框查看元素位置大小等但是有时我们却又不希望看到这些边框，一些元素的默认边框，比如input标签等我们可以选择隐藏或者去除",
+          companyLogo:
+            "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1105402388,3234073623&fm=11&gp=0.jpg"
+        },
+        {
+          companyName: "惠州巨合",
+          tagName: ["战略合作伙伴", "电商", "物联网"],
+          companyDesc:
+            "在进行页面布局时，边框是我们最常用的的属性之一我们可以通过边框查看元素位置大小等但是有时我们却又不希望看到这些边框，一些元素的默认边框，比如input标签等我们可以选择隐藏或者去除",
+          companyLogo:
+            "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1105402388,3234073623&fm=11&gp=0.jpg"
+        },
+        {
+          companyName: "惠州巨合",
+          tagName: ["战略合作伙伴", "电商", "物联网"],
+          companyDesc:
+            "在进行页面布局时，边框是我们最常用的的属性之一我们可以通过边框查看元素位置大小等但是有时我们却又不希望看到这些边框，一些元素的默认边框，比如input标签等我们可以选择隐藏或者去除",
+          companyLogo:
+            "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1105402388,3234073623&fm=11&gp=0.jpg"
+        },
+        {
+          companyName: "惠州巨合",
+          tagName: ["战略合作伙伴", "电商", "物联网"],
+          companyDesc:
+            "在进行页面布局时，边框是我们最常用的的属性之一我们可以通过边框查看元素位置大小等但是有时我们却又不希望看到这些边框，一些元素的默认边框，比如input标签等我们可以选择隐藏或者去除",
+          companyLogo:
+            "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1105402388,3234073623&fm=11&gp=0.jpg"
+        },
+        {
+          companyName: "惠州巨合",
+          tagName: ["战略合作伙伴", "电商", "物联网"],
+          companyDesc:
+            "在进行页面布局时，边框是我们最常用的的属性之一我们可以通过边框查看元素位置大小等但是有时我们却又不希望看到这些边框，一些元素的默认边框，比如input标签等我们可以选择隐藏或者去除",
+          companyLogo:
+            "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1105402388,3234073623&fm=11&gp=0.jpg"
         }
       ]
     };
@@ -128,7 +168,7 @@ export default {
 </script>
 <style <style lang="less" scoped>
 .search-page {
-  min-width: 1200px;
+  
 }
 .tab-pane-class {
   padding-left: 108px;
@@ -175,10 +215,9 @@ export default {
       font-size: 16px;
       font-weight: 700;
       color: #949494;
-
     }
     .company-relevant-item {
-      padding: 0px 10px;;
+      padding: 0px 10px;
       font-size: 16px;
       font-weight: 700;
       color: #32beff;

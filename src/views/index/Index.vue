@@ -1,24 +1,53 @@
 <template>
-  <Main :tabPane="true">
-    <div class="home">
-      <div class="search-logo-wrapper">
-        <MySearchLogo class="my-search-logo"></MySearchLogo>
-        <HomeSearchBar class="home-search-bar"></HomeSearchBar>
-      </div>
-    <div class="layout-footer-center">
-        <div class="qrCode">
-          <img src="@/assets/img/index-qr-code.png" alt />
-          <p>官方小程序</p>
+  <Layout style="height: 100%" class="main">
+    <Layout>
+      <Header class="header-con">
+        <div class="header-bar">
+          <div class="custom-content-con">
+            <user
+              :message-unread-count="unreadCount"
+              :nickName="userNickName"
+              :user-avatar="userAvatar"
+            />
+            <Menu
+              mode="horizontal"
+              theme="light"
+            >
+              <MenuItem name="1" to="/searchcompany">公司</MenuItem>
+              <MenuItem name="2" to="/searchindustry">行业</MenuItem>
+              <MenuItem name="3" to="/searchregionc">区域</MenuItem>
+              <MenuItem name="4" to="/searchreport">资讯报告</MenuItem>
+              <MenuItem name="5" to="/searchpolicy">政策文件</MenuItem>
+            </Menu>
+          </div>
         </div>
-        <div>网站备案/许可证号：鲁ICP备09897989号 Copyright@2015-2030海尔集团 All Right Resevivel</div>
-      </div>
-    </div>
-  </Main>
+      </Header>
+      <Content class="main-content-con">
+        <Layout class="main-layout-con">
+          <Content class="content-wrapper">
+            <div class="home">
+              <div class="search-logo-wrapper">
+                <MySearchLogo class="my-search-logo"></MySearchLogo>
+                <HomeSearchBar class="home-search-bar"></HomeSearchBar>
+              </div>
+              <div class="layout-footer-center">
+                <div class="qrCode">
+                  <img src="@/assets/img/index-qr-code.png" alt />
+                  <p>官方小程序</p>
+                </div>
+                <div>网站备案/许可证号：鲁ICP备09897989号 Copyright@2015-2030海尔集团 All Right Resevivel</div>
+              </div>
+            </div>
+          </Content>
+        </Layout>
+      </Content>
+    </Layout>
+  </Layout>
 </template>
 
 <script>
 // @ is an alias to /src
-import Main from "@/components/main";
+import User from "@/components/main/components/user";
 import MySearchLogo from "@/components/searchBar/MySearchLogo.vue";
 import HomeSearchBar from "@/components/searchBar/HomeSearchBar.vue";
 export default {
@@ -26,19 +55,71 @@ export default {
   components: {
     MySearchLogo,
     HomeSearchBar,
-    Main
+    User
   }
 };
 </script>
 
 <style lang="less" scoped>
+.main{
+  .logo-con{
+    height: 50px;
+    padding: 10px;
+    img{
+      height: 44px;
+      width: auto;
+      display: block;
+      margin: 0 auto;
+    }
+  }
+  .header-con{
+    background: #fff;
+    padding: 0 20px;
+    width: 100%;
+    border-bottom: 1px solid #999;
+    box-shadow: 0 0 5px #888;
+    box-sizing: border-box;
+  }
+  .main-layout-con{
+    height: 100%;
+    overflow: hidden;
+  }
+  .main-content-con{
+    height: ~"calc(100% - 60px)";
+    overflow: hidden;
+  }
+  .tag-nav-wrapper{
+    padding: 0;
+    height:40px;
+    background:#F0F0F0;
+  }
+  .content-wrapper{
+    padding: 18px;
+    height: ~"calc(100% - 80px)";
+    overflow: auto;
+  }
+}
+.header-bar{
+  width: 100%;
+  height: 100%;
+  position: relative;
+  .custom-content-con{
+    float: right;
+    height: auto;
+    padding-right: 20px;
+    line-height: 40px;
+    & > *{
+      float: right;
+    }
+  }
+}
 .home {
   width: 100%;
-// height: 100%;
-// min-height: 480px;
+  // height: 100%;
+  // min-height: 480px;
 }
 .search-logo-wrapper {
-  margin: 60px auto 0px auto;
+  margin: 80px auto 0px auto;
 }
 .my-search-logo {
   margin: 20px auto;
@@ -64,5 +145,13 @@ export default {
     height: 100%;
   }
 }
-
+.ivu-menu-horizontal {
+  height: 38px;
+  line-height: 40px;
+  border: 0;
+}
+.ivu-layout-header {
+    height: 40px;
+    line-height: 40px;
+}
 </style>

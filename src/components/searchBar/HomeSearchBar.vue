@@ -34,7 +34,7 @@ export default {
   border: 1px solid #32beff;
   vertical-align: middle;
   font-size: 1.2em;
-  border-radius: 5px 0 0 5px;
+  // border-radius: 5px 0 0 5px;
   padding: 10px;
 }
 .btn-search {
@@ -48,7 +48,7 @@ export default {
   color: #fff;
   font-size: 3em;
   border: none;
-  border-radius: 0 5px 5px 0;
+  // border-radius: 0 5px 5px 0;
   cursor: pointer;
 }
 </style>

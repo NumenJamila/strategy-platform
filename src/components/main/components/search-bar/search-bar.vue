@@ -31,10 +31,11 @@ export default {
 
 <style lang="less" scoped>
 .home-search-bar {
-  display: inline-block;
+  // display: inline-block;
+  float: left;
   // width: 300px;
-  height: 50px;
-  line-height: 50px;
+  height: 56px;
+  line-height: 56px;
 }
 .container {
   width: 100%;
@@ -56,7 +57,7 @@ export default {
   // vertical-align: top;
   vertical-align: middle;
   font-size: 1.2em;
-  border-radius: 5px 0 0 5px;
+  // border-radius: 5px 0 0 5px;
   padding: 6px;
 }
 .btn-search {
@@ -71,6 +72,6 @@ export default {
   color: #fff;
   font-size: 2.4em;
   border: none;
-  border-radius: 0 5px 5px 0;
+  // border-radius: 0 5px 5px 0;
 }
 </style>
