@@ -115,11 +115,15 @@ export default {
 }
 .home {
   width: 100%;
-  // height: 100%;
+  height: 100%;
   // min-height: 480px;
+  position: relative;
 }
 .search-logo-wrapper {
-  margin: 80px auto 0px auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -130%)
 }
 .my-search-logo {
   margin: 20px auto;

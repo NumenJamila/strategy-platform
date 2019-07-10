@@ -17,6 +17,7 @@
 
 <style lang="less" scoped>
 .wrapper {
+  
   width: 400px;
   img {
     width: 200px;

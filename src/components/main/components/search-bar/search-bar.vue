@@ -43,6 +43,7 @@ export default {
 }
 .logo {
   // height: 26px;
+  cursor: pointer;
   width: 120px;
   vertical-align: middle;
   margin-right: 20px;
@@ -62,6 +63,7 @@ export default {
 }
 .btn-search {
   outline: none;
+  cursor: pointer;
   width: 50px;
   height: 30px;
   line-height: 30px;

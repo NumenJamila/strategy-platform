@@ -154,6 +154,9 @@ export default {
     this.doSearchResult();
   },
   methods: {
+    goCompanyDetail() {
+      this.$router.push('/companydetail')
+    },
     doSearchResult() {},
     goUrl(url) {
       this.$router.push({ name: url });

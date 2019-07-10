@@ -47,6 +47,11 @@ export default new Router({
 			component: () => import('@/views/search/SearchReport'),
 		},
 		{
+			name: 'CompanyDetail',
+			path: '/companydetail',
+			component: () => import('@/views/detail/CompanyDetail'),
+		},
+		{
 			name: 'NotMatch',
 			path: '*',
 			component: () => import('@/views/404/404'),
