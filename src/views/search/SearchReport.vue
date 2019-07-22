@@ -1,9 +1,9 @@
 <template>
-  <Main searchBar>
+  <Main searchBar @mainSearch="searchInformation">
     <div class="search-page customize-container-center">
-      <div class="tab-pane-title">人工智能</div>
+      <!-- <div class="tab-pane-title">{{this.queryCondition.informationName}}</div>  -->
       <tabItemBar :whichItem="whichItem" @tabClick="tabClick"></tabItemBar>
-      <Tabs type="card" class="ivu-tabs-bar-update">
+      <Tabs type="card" class="ivu-tabs-bar-update" @on-click="typeChange" >
         <TabPane label="最新资讯">
           <div class="wrapper">
             <div class="container">
@@ -12,18 +12,37 @@
                 ref="currentRowTable"
                 :show-header="false"
                 :border="false"
-                :columns="columns7"
-                :data="data6"
+                :columns="reportsColumns"
+                :data="informationData"
               ></Table>
             </div>
             <div style="margin: 10px;overflow: hidden">
               <div style="float: right;">
-                <Page :total="100" show-elevator show-sizer :current="1" @on-change="changePage"></Page>
+                <Page :total="entityCount" show-elevator show-total :current="1" @on-change="changePage"></Page>
               </div>
             </div>
           </div>
         </TabPane>
-        <TabPane label="行业报告">标签二的内容</TabPane>
+        <TabPane label="行业报告">
+          <div class="wrapper">
+            <div class="container">
+              <Table
+                highlight-row
+                ref="currentRowTable"
+                :show-header="false"
+                :border="false"
+                :columns="reportsColumns"
+                :data="informationData"
+              ></Table>
+            </div>
+            <div style="margin: 10px;overflow: hidden">
+              <div style="float: right;">
+                <Page :total="entityCount" show-elevator show-total :current="1" @on-change="changePage"></Page>
+              </div>
+            </div>
+          </div>
+
+        </TabPane>
       </Tabs>
       <div class="other-project">
         <div class="other-container">
@@ -31,45 +50,33 @@
             <div class="other-item-title">
               <span>我的收藏</span>
               <span class="read-more">
-                查看更多
+                <a @click="getMoreCollect">查看更多</a>
                 <Icon type="ios-arrow-forward" />
               </span>
             </div>
             <div class="other-item-container">
-              <div class="project-item">
-                <img src="https://avatar.csdn.net/1/2/3/3_liu_liu57.jpg" alt />
-                <div class="project-item-name">促进新一代人工智能健康促进新一代人工智能健康促进新一代人工智能健康促进新一代人工智能健康</div>
-              </div>
-              <div class="project-item">
-                <img src="https://avatar.csdn.net/1/2/3/3_liu_liu57.jpg" alt />
-                <div class="project-item-name">促进新一代人工智能健康</div>
-              </div>
-              <div class="project-item">
-                <img src="https://avatar.csdn.net/1/2/3/3_liu_liu57.jpg" alt />
-                <div class="project-item-name">促进新一代人工智能健康</div>
+              <div v-for="info in collectData" :key="info.id">
+                <div class="project-item">
+                  <img src="https://avatar.csdn.net/1/2/3/3_liu_liu57.jpg" alt />
+                  <div><a class="project-item-name" @click="getCollectOrHistoryInformationDetail(info.informationId)">{{info.informationName}}</a></div>
+                </div>
               </div>
             </div>
           </div>
           <div class="other-item">
             <div class="other-item-title">
-              <span>我的收藏</span>
+              <span>浏览历史</span>
               <span class="read-more">
-                查看更多
+                <a @click="getMoreHistory">查看更多</a>
                 <Icon type="ios-arrow-forward" />
               </span>
             </div>
             <div class="other-item-container">
-              <div class="project-item">
-                <img src="https://avatar.csdn.net/1/2/3/3_liu_liu57.jpg" alt />
-                <div class="project-item-name">促进新一代人工智能健康促进新一代人工智能健康促进新一代人工智能健康促进新一代人工智能健康</div>
-              </div>
-              <div class="project-item">
-                <img src="https://avatar.csdn.net/1/2/3/3_liu_liu57.jpg" alt />
-                <div class="project-item-name">促进新一代人工智能健康</div>
-              </div>
-              <div class="project-item">
-                <img src="https://avatar.csdn.net/1/2/3/3_liu_liu57.jpg" alt />
-                <div class="project-item-name">促进新一代人工智能健康</div>
+              <div v-for="info in historyData" :key="info.id">
+                <div class="project-item">
+                  <img src="https://avatar.csdn.net/1/2/3/3_liu_liu57.jpg" alt />
+                  <div><a class="project-item-name" @click="getCollectOrHistoryInformationDetail(info.informationId)">{{info.informationName}}</a></div>
+                 </div>
               </div>
             </div>
           </div>
@@ -84,6 +91,10 @@
 import Main from "@/components/main";
 import tabItemBar from "@/components/tabItemBar";
 import SearchResultItem from "@/components/searchBar/SearchResultItem.vue";
+import information from "@/api/information";
+import collect from "@/api/collect";
+import { constants } from 'crypto';
+import browseHistory from "@/api/browseHistory"
 // import DB from "@/data/search.json";
 export default {
   data() {
@@ -91,11 +102,29 @@ export default {
       msg: this.$route.params.searchText,
       searchResultList: [],
       whichItem: "SearchReport",
-      columns7: [
+      reportsColumns: [
         {
           title: "名称",
-          key: "name",
+          key: "informationName",
           width: 300,
+          render:(h,params) =>{
+            return h("div",[
+               h(
+                 'a',
+                
+                  {
+                     style:{
+                       color:"#515a6e"
+                   },
+                    on: { click: () => {
+                        this.getInformationDetail(params.index);
+                      },
+                    }
+                  },
+                  params.row.informationName
+               )
+            ])
+          }
         },
         {
           title: "来源",
@@ -104,21 +133,44 @@ export default {
         },
         {
           title: "时间",
-          key: "time",
-          width: 100,
+          key: "createTime",
+          width: 160,
         },
         {
           title: "操作",
           key: "action",
-          width: 60,
-          align: "center",
+          width: 200,
+          align: "left",
           render: (h, params) => {
-            return h("div", [
-              h(
+            if(params.row.informationType == 1){
+                return h("div", [
+                h(
+                  "Button",
+                  {
+                    props: {
+                      type: params.row.collect? 'error' : 'primary',
+                      size: "small"
+                    },
+                    style: {
+                      marginRight: "5px"
+                    },
+                    on: {
+                      click: () => {
+                        this.collectInformation(params.index);
+                      }
+                    }
+                  },
+                
+                  params.row.collect?"已收藏":"收藏"
+                )
+              ])
+            }else{
+              return h("div", [
+               h(
                 "Button",
                 {
                   props: {
-                    type: "primary",
+                    type: 'primary',
                     size: "small"
                   },
                   style: {
@@ -126,69 +178,58 @@ export default {
                   },
                   on: {
                     click: () => {
-                      this.show(params.index);
+                      this.downLoadFile(params.index);
                     }
                   }
-                },
-                "收藏"
+                 },
+                 "下载"
+               ),
+                h(
+                  "Button",
+                  {
+                    props: {
+                      type: params.row.collect? 'error' : 'primary',
+                      size: "small"
+                    },
+                    style: {
+                      marginRight: "5px"
+                    },
+                    on: {
+                      click: () => {
+                        this.collectInformation(params.index);
+                      }
+                    }
+                  },
+                
+                  params.row.collect?"已收藏":"收藏"
+                )
+              ],
               )
-            ]);
+            }
           }
-        }
+        },
       ],
-      data6: [
-        {
-          name: "促进新一代人工智能健康发展（适势求是）",
-          source: "人民日报",
-          time: "2019-6-30"
-        },
-        {
-          name: "促进新一代人工智能健康发展（适势求是）",
-          source: "人民日报",
-          time: "2019-6-30"
-        },
-        {
-          name: "促进新一代人工智能健康发展（适势求是）",
-          source: "人民日报",
-          time: "2019-6-30"
-        },
-        {
-          name: "促进新一代人工智能健康发展（适势求是）",
-          source: "人民日报",
-          time: "2019-6-30"
-        },
-        {
-          name: "促进新一代人工智能健康发展（适势求是）",
-          source: "人民日报",
-          time: "2019-6-30"
-        },
-        {
-          name: "促进新一代人工智能健康发展（适势求是）",
-          source: "人民日报",
-          time: "2019-6-30"
-        },
-        {
-          name: "促进新一代人工智能健康发展（适势求是）",
-          source: "人民日报",
-          time: "2019-6-30"
-        },
-        {
-          name: "促进新一代人工智能健康发展（适势求是）",
-          source: "人民日报",
-          time: "2019-6-30"
-        },
-        {
-          name: "促进新一代人工智能健康发展（适势求是）",
-          source: "人民日报",
-          time: "2019-6-30"
-        },
-        {
-          name: "促进新一代人工智能健康发展（适势求是）",
-          source: "人民日报",
-          time: "2019-6-30"
-        }
-        
-      ]
+      
+      informationData: [],
+      reportData: [],
+      historyData:[],
+      collcetData:[],
+      queryCondition:{
+        pageNo: 1,
+        pageSize:8,
+        informationName:"",
+        informationType:1
+      },
+      collected:{
+        collectName:"",
+        collectedType:"",
+        collectId:""
+      },
+      entityCount:1,
+      tabIndex: 0,
+      queryCollectAndHistoryCondition:{
+        type:2
+      }
     };
   },
   components: {
@@ -197,24 +238,142 @@ export default {
     tabItemBar
   },
   created() {
+    this.queryCondition.informationName = this.msg;
     this.doSearchResult();
+    this.queryCollectAndHistory();
   },
+  
   beforeRouteUpdate(to, from, next) {
     next();
     this.doSearchResult();
+    this.queryCollectAndHistory();
   },
   methods: {
-    doSearchResult() {},
+    doSearchResult() {
+      information.queryInformation(this.queryCondition).then(res=>{
+        if(res.data.isSuccess){
+          this.informationData = res.data.information.entities;
+          this.entityCount = res.data.information.entityCount;
+        }else{
+           this.$Message.info({
+                content: res.data.msg,
+                duration: 3
+            });
+        }
+      })
+    },
+    queryCollectAndHistory(){
+      browseHistory.queryCollectedAndHistory(this.queryCollectAndHistoryCondition).then(res =>{
+        if(res.data.isSuccess){
+            this.historyData = res.data.historyList;
+            console.log(this.historyData);
+            this.collectData = res.data.collectList;
+            console.log(this.collectData);
+        }else{
+          this.$Message.info(
+            {
+              content: res.data.msg,
+              duration: 3
+            }
+          )}
+      })
+    },
     goUrl(url) {
       this.$router.push({ name: url });
     },
     tabClick(e) {
       let that = this;
-      console.log(e);
       that.goUrl(e);
+    },
+    //查找资讯信息
+    searchInformation(searchText){
+      this.queryCondition.informationName = searchText;
+      this.doSearchResult();
+    },
+
+    getInformationDetail(params){
+     this.$router.push({
+        path: '/informationDetail',
+        query: {
+          informationId: this.informationData[params].informationId
+        }
+      })
+    },
+    getCollectOrHistoryInformationDetail(params){
+      this.$router.push({
+        path:'/informationDetail',
+        query:{
+          informationId: params
+        }
+      })
+    },
+
+    //更换tab时，切换资讯信息的type
+    typeChange(e){
+      if(this.tabIndex == e){
+        return;
+      }
+      this.tabIndex =e;
+      if(this.queryCondition.informationType == 1){
+          this.queryCondition.informationType = 2;
+          this.queryCollectAndHistoryCondition.type = 3;
+        }else{
+          this.queryCondition.informationType = 1;
+          this.queryCollectAndHistoryCondition.type = 2;
+        }
+        this.queryCondition.pageNo = 1;
+        this.doSearchResult();
+        this.queryCollectAndHistory();
+    },
+    //换页请求数据
+    changePage(currentNo){
+      this.queryCondition.pageNo = currentNo
+      this.doSearchResult();
+     
+    },
+    //收藏操作，点击收藏，再点击取消收藏
+    collectInformation(params){
+      this.collected.collectId = this.informationData[params].informationId;
+      this.collected.collectName = this.informationData[params].informationName;
+      if(this.informationData[params].informationType == 1){
+        this.collected.collectedType = 2;
+      }else{
+        this.collected.collectedType = 3;
+      }
+
+      collect.collected(this.collected).then(res=>{
+          if(res.data.isSuccess){
+            if(res.data.isCollect){
+              //图标改成已收藏
+              this.informationData[params].collect = true;
+            }else{
+              //图标改成收藏
+              this.informationData[params].collect = false;
+            }
+            this.$Message.info({
+                  content: res.data.msg,
+                  duration: 3
+              });
+          }else{
+            this.$Message.info({
+                  content: res.data.msg,
+                  duration: 3
+              });
+          }
+      })
+  },
+  getMoreCollect(){
+      this.$router.push({
+        path:"/collected",
+      })
+  },
+  getMoreHistory(){
+    this.$router.push({
+        path:"/history",
+      })
     }
   }
-};
+}
 </script>
 <style lang="less">
 .ivu-tabs-bar-update {

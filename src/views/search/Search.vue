@@ -20,7 +20,8 @@ export default {
     return {
       msg: this.$route.params.searchText,
       searchResultList: [],
-      whichItem: "Search"
+      whichItem: "Search",
+    
     };
   },
   components: {
@@ -36,13 +37,14 @@ export default {
     this.doSearchResult();
   },
   methods: {
-    doSearchResult() {},
+    doSearchResult() {
+
+    },
     goUrl(url) {
       this.$router.push({name: url});
     },
     tabClick(e) {
       let that = this;
-      console.log(e);
       that.goUrl(e)
     },
   }

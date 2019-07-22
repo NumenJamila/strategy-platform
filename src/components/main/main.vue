@@ -3,7 +3,7 @@
     <Layout>
       <Header class="header-con">
         <div class="header-bar customize-container-center">
-          <SearchBar @doSearch="doSearch(e)" v-if="searchBar"></SearchBar>
+          <SearchBar @doSearch="mainSearch" v-if="searchBar"></SearchBar>
           <div class="custom-content-con">
             <user
               :message-unread-count="unreadCount"
@@ -41,7 +41,9 @@ export default {
     TabPane
   },
   data() {
-    return {};
+    return {
+      e:""
+    };
   },
   props: {
     searchBar: {
@@ -68,8 +70,8 @@ export default {
     }
   },
   methods: {
-    doSearch(e) {
-      this.$emit("doSearch", e)
+    mainSearch(searchText) {
+      this.$emit("mainSearch", searchText)
     },
     onSelect(e) {
       this.$emit("onSelect", e)

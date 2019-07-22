@@ -28,7 +28,7 @@
             <div class="home">
               <div class="search-logo-wrapper">
                 <MySearchLogo class="my-search-logo"></MySearchLogo>
-                <HomeSearchBar class="home-search-bar"></HomeSearchBar>
+                <HomeSearchBar @click="searchCompany" class="home-search-bar"></HomeSearchBar>
               </div>
               <div class="layout-footer-center">
                 <div class="qrCode">
@@ -55,8 +55,9 @@ export default {
   components: {
     MySearchLogo,
     HomeSearchBar,
-    User
+    User,
   }
+ 
 };
 </script>
 
