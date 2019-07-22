@@ -16,7 +16,14 @@ export default {
   },
   methods: {
     doSearch() {
+
       this.$emit("doSearch", this.searchText);
+       this.$router.push({
+        path: '/searchCompany',
+        query: {
+          companyName: this.searchText
+        }
+      })
     }
   }
 };

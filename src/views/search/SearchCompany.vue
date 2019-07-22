@@ -1,18 +1,23 @@
 <template>
-  <Main searchBar>
+  <Main searchBar @mainSearch="searchCompany">
     <div class="search-page customize-container-center">
       <tabItemBar :whichItem="whichItem" @tabClick="tabClick" class="tab-pane-class"></tabItemBar>
       <Layout>
         <Layout>
           <Content class="content-left">
-            <div v-for="info in searchResultList" :key="info.url">
+            <div v-for="info in tableData" :key="info.url">
               <div class="search-company-item">
-                <div class="company-title" @click="goCompanyDetail">
+                <div class="company-title" @click="goCompanyDetail(info.companyNo)">
                   <img class="company-logo" :src="info.companyLogo" alt />
                   <span class="company-Name">{{info.companyName}}</span>
                   <span class="tag-name" v-for="tag in info.tagName" :key="tag">[{{tag}}]</span>
                 </div>
                 <div class="company-desc">{{info.companyDesc}}</div>
+              </div>
+            </div>
+            <div style="margin: 10px;overflow: hidden">
+              <div style="float: right;">
+                <Page :total="entityCount" show-total show-elevator page-size=8 :current="1" @on-change="changePage"></Page>
               </div>
             </div>
           </Content>
@@ -43,103 +48,34 @@
 import Main from "@/components/main";
 import tabItemBar from "@/components/tabItemBar";
 import SearchResultItem from "@/components/searchBar/SearchResultItem.vue";
+import { constants } from 'crypto';
+import companyinfo from "@/api/companyinfo"
 // import DB from "@/data/search.json";
 export default {
   data() {
     return {
       msg: this.$route.params.searchText,
+      
       whichItem: "SearchCompany",
-      searchResultList: [
-        {
-          companyName: "惠州巨合",
-          tagName: ["战略合作伙伴", "电商", "物联网"],
-          companyDesc:
-            "在进行页面布局时，边框是我们最常用的的属性之一我们可以通过边框查看元素位置大小等但是有时我们却又不希望看到这些边框，一些元素的默认边框，比如input标签等我们可以选择隐藏或者去除",
-          companyLogo:
-            "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1105402388,3234073623&fm=11&gp=0.jpg"
-        },
-        {
-          companyName: "惠州巨合",
-          tagName: ["战略合作伙伴", "电商", "物联网"],
-          companyDesc:
-            "在进行页面布局时，边框是我们最常用的的属性之一我们可以通过边框查看元素位置大小等但是有时我们却又不希望看到这些边框，一些元素的默认边框，比如input标签等我们可以选择隐藏或者去除",
-          companyLogo:
-            "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1105402388,3234073623&fm=11&gp=0.jpg"
-        },
-        {
-          companyName: "惠州巨合",
-          tagName: ["战略合作伙伴", "电商", "物联网"],
-          companyDesc:
-            "在进行页面布局时，边框是我们最常用的的属性之一我们可以通过边框查看元素位置大小等但是有时我们却又不希望看到这些边框，一些元素的默认边框，比如input标签等我们可以选择隐藏或者去除",
-          companyLogo:
-            "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1105402388,3234073623&fm=11&gp=0.jpg"
-        },
-        {
-          companyName: "惠州巨合",
-          tagName: ["战略合作伙伴", "电商", "物联网"],
-          companyDesc:
-            "在进行页面布局时，边框是我们最常用的的属性之一我们可以通过边框查看元素位置大小等但是有时我们却又不希望看到这些边框，一些元素的默认边框，比如input标签等我们可以选择隐藏或者去除",
-          companyLogo:
-            "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1105402388,3234073623&fm=11&gp=0.jpg"
-        },
-        {
-          companyName: "惠州巨合",
-          tagName: ["战略合作伙伴", "电商", "物联网"],
-          companyDesc:
-            "在进行页面布局时，边框是我们最常用的的属性之一我们可以通过边框查看元素位置大小等但是有时我们却又不希望看到这些边框，一些元素的默认边框，比如input标签等我们可以选择隐藏或者去除",
-          companyLogo:
-            "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1105402388,3234073623&fm=11&gp=0.jpg"
-        },
-        {
-          companyName: "惠州巨合",
-          tagName: ["战略合作伙伴", "电商", "物联网"],
-          companyDesc:
-            "在进行页面布局时，边框是我们最常用的的属性之一我们可以通过边框查看元素位置大小等但是有时我们却又不希望看到这些边框，一些元素的默认边框，比如input标签等我们可以选择隐藏或者去除",
-          companyLogo:
-            "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1105402388,3234073623&fm=11&gp=0.jpg"
-        },
-        {
-          companyName: "惠州巨合",
-          tagName: ["战略合作伙伴", "电商", "物联网"],
-          companyDesc:
-            "在进行页面布局时，边框是我们最常用的的属性之一我们可以通过边框查看元素位置大小等但是有时我们却又不希望看到这些边框，一些元素的默认边框，比如input标签等我们可以选择隐藏或者去除",
-          companyLogo:
-            "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1105402388,3234073623&fm=11&gp=0.jpg"
-        },
-        {
-          companyName: "惠州巨合",
-          tagName: ["战略合作伙伴", "电商", "物联网"],
-          companyDesc:
-            "在进行页面布局时，边框是我们最常用的的属性之一我们可以通过边框查看元素位置大小等但是有时我们却又不希望看到这些边框，一些元素的默认边框，比如input标签等我们可以选择隐藏或者去除",
-          companyLogo:
-            "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1105402388,3234073623&fm=11&gp=0.jpg"
-        },
-        {
-          companyName: "惠州巨合",
-          tagName: ["战略合作伙伴", "电商", "物联网"],
-          companyDesc:
-            "在进行页面布局时，边框是我们最常用的的属性之一我们可以通过边框查看元素位置大小等但是有时我们却又不希望看到这些边框，一些元素的默认边框，比如input标签等我们可以选择隐藏或者去除",
-          companyLogo:
-            "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1105402388,3234073623&fm=11&gp=0.jpg"
-        },
-        {
-          companyName: "惠州巨合",
-          tagName: ["战略合作伙伴", "电商", "物联网"],
-          companyDesc:
-            "在进行页面布局时，边框是我们最常用的的属性之一我们可以通过边框查看元素位置大小等但是有时我们却又不希望看到这些边框，一些元素的默认边框，比如input标签等我们可以选择隐藏或者去除",
-          companyLogo:
-            "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1105402388,3234073623&fm=11&gp=0.jpg"
-        },
-        {
-          companyName: "惠州巨合",
-          tagName: ["战略合作伙伴", "电商", "物联网"],
-          companyDesc:
-            "在进行页面布局时，边框是我们最常用的的属性之一我们可以通过边框查看元素位置大小等但是有时我们却又不希望看到这些边框，一些元素的默认边框，比如input标签等我们可以选择隐藏或者去除",
-          companyLogo:
-            "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1105402388,3234073623&fm=11&gp=0.jpg"
-        }
-      ]
-    };
+      queryCondition: {
+        pageNo: 1,
+        pageSize:5,
+        companyName: "",
+        regCapital: 0,
+        finanSituation: "",
+        industry: "",
+        sortCondition: "",
+        importantFocus: "",
+        companyType: "",
+        provinceCode: "",
+        cityCode: "",
+        tagName: ""
+        
+      },
+      tableData: [],
+      entityCount: 1
+    }
+    
   },
   components: {
     SearchResultItem,
@@ -147,29 +83,60 @@ export default {
     tabItemBar
   },
   created() {
+    
+    this.queryCondition.companyName = this.$route.query.companyName
     this.doSearchResult();
+    
   },
   beforeRouteUpdate(to, from, next) {
     next();
     this.doSearchResult();
   },
   methods: {
-    goCompanyDetail() {
-      this.$router.push('/companydetail')
+    goCompanyDetail(companyNo) {
+      this.$router.push({
+        path: '/companydetail',
+        query: {
+          companyNo: companyNo
+        }
+      })
     },
-    doSearchResult() {},
+    doSearchResult() {
+      companyinfo.queryCompany(
+          this.queryCondition
+      ).then(res=>{
+        if(res.data.isSuccess){
+            this.tableData = res.data.data.entities;
+            this.entityCount =  res.data.data.entityCount;
+        }else{
+         this.$Message.info({
+                content: res.data.msg,
+                duration: 3
+            });
+        }
+      });
+    },
     goUrl(url) {
       this.$router.push({ name: url });
     },
     tabClick(e) {
       let that = this;
-      console.log(e);
       that.goUrl(e);
+    },
+    searchCompany(searchText){
+      console.log("searchText");
+      console.log(searchText);
+      this.queryCondition.companyName = searchText;
+      this.doSearchResult();
+    },
+    changePage(currentNo){
+      this.queryCondition.pageNo = currentNo
+      this.doSearchResult();
     }
   }
 };
 </script>
-<style <style lang="less" scoped>
+<style lang="less" scoped>
 .search-page {
   
 }
@@ -247,4 +214,5 @@ export default {
   padding: 5px 4px;
   /* margin-right: 0; */
 }
+
 </style>

@@ -55,6 +55,26 @@ export default new Router({
 			name: 'NotMatch',
 			path: '*',
 			component: () => import('@/views/404/404'),
+		},
+		{
+			name: 'CooperateDetail',
+			path: '/cooperateDetail',
+			component: () => import('@/views/detail/CooperateDetail'),
+		},
+		{
+			name: 'InformationDetail',
+			path: '/informationDetail',
+			component: () => import('@/views/detail/InformationDetail'),
+		},
+		{
+			name: 'Collected',
+			path: '/collected',
+			component: () => import('@/views/list/Collected'),
+		},
+		{
+			name: 'History',
+			path: '/history',
+			component: () => import('@/views/list/History'),
 		}
 	]
 })
