@@ -91,11 +91,11 @@
 import Main from "@/components/main";
 import tabItemBar from "@/components/tabItemBar";
 import SearchResultItem from "@/components/searchBar/SearchResultItem.vue";
-import information from "@/api/information";
-import collect from "@/api/collect";
+import { queryInformation, collected, queryCollectedAndHistory } from '@/services';
+// import information from "@/api/information";
+// import collect from "@/api/collect";
 import { constants } from 'crypto';
-import browseHistory from "@/api/browseHistory"
-// import DB from "@/data/search.json";
+
 export default {
   data() {
     return {
@@ -117,7 +117,7 @@ export default {
                        color:"#515a6e"
                    },
                     on: { click: () => {
-                        this.getInformationDetail(params.index);
+                        this.GetInformationDetail(params.row.informationId);
                       },
                     }
                   },
@@ -250,7 +250,7 @@ export default {
   },
   methods: {
     doSearchResult() {
-      information.queryInformation(this.queryCondition).then(res=>{
+      queryInformation(this.queryCondition).then(res=>{
         if(res.data.isSuccess){
           this.informationData = res.data.information.entities;
           this.entityCount = res.data.information.entityCount;
@@ -263,7 +263,7 @@ export default {
       })
     },
     queryCollectAndHistory(){
-      browseHistory.queryCollectedAndHistory(this.queryCollectAndHistoryCondition).then(res =>{
+      queryCollectedAndHistory(this.queryCollectAndHistoryCondition).then(res =>{
         if(res.data.isSuccess){
             this.historyData = res.data.historyList;
             console.log(this.historyData);
@@ -291,11 +291,11 @@ export default {
       this.doSearchResult();
     },
 
-    getInformationDetail(params){
+    GetInformationDetail(informationId){
      this.$router.push({
         path: '/informationDetail',
         query: {
-          informationId: this.informationData[params].informationId
+          informationId: informationId
         }
       })
     },
@@ -341,7 +341,7 @@ export default {
         this.collected.collectedType = 3;
       }
 
-      collect.collected(this.collected).then(res=>{
+      collected(this.collected).then(res=>{
           if(res.data.isSuccess){
             if(res.data.isCollect){
               //图标改成已收藏

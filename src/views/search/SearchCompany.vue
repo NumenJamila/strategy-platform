@@ -1,5 +1,5 @@
 <template>
-  <Main searchBar @mainSearch="searchCompany">
+  <Main :searchText="searchText" @mainSearch="mainSearch">
     <div class="search-page customize-container-center">
       <tabItemBar :whichItem="whichItem" @tabClick="tabClick" class="tab-pane-class"></tabItemBar>
       <Layout>
@@ -10,14 +10,21 @@
                 <div class="company-title" @click="goCompanyDetail(info.companyNo)">
                   <img class="company-logo" :src="info.companyLogo" alt />
                   <span class="company-Name">{{info.companyName}}</span>
-                  <span class="tag-name" v-for="tag in info.tagName" :key="tag">[{{tag}}]</span>
+                  <span class="tag-name" v-for="tag in info.tagList" :key="tag">[{{tag}}]</span>
                 </div>
                 <div class="company-desc">{{info.companyDesc}}</div>
               </div>
             </div>
             <div style="margin: 10px;overflow: hidden">
               <div style="float: right;">
-                <Page :total="entityCount" show-total show-elevator page-size=8 :current="1" @on-change="changePage"></Page>
+                <Page
+                  :total="entityCount"
+                  show-total
+                  show-elevator
+                  :page-size="queryCondition.pageSize"
+                  :current="queryCondition.pageNo"
+                  @on-change="changePage"
+                ></Page>
               </div>
             </div>
           </Content>
@@ -47,19 +54,17 @@
 // @ means "src"
 import Main from "@/components/main";
 import tabItemBar from "@/components/tabItemBar";
-import SearchResultItem from "@/components/searchBar/SearchResultItem.vue";
-import { constants } from 'crypto';
-import companyinfo from "@/api/companyinfo"
-// import DB from "@/data/search.json";
+// import { constants } from "crypto";
+import { queryCompany } from '@/services';
 export default {
   data() {
     return {
-      msg: this.$route.params.searchText,
-      
+      searchText: this.$route.query.companyName,
+
       whichItem: "SearchCompany",
       queryCondition: {
         pageNo: 1,
-        pageSize:5,
+        pageSize: 10,
         companyName: "",
         regCapital: 0,
         finanSituation: "",
@@ -70,24 +75,20 @@ export default {
         provinceCode: "",
         cityCode: "",
         tagName: ""
-        
       },
       tableData: [],
       entityCount: 1
-    }
-    
+    };
   },
   components: {
-    SearchResultItem,
     Main,
     tabItemBar
   },
   created() {
-    
-    this.queryCondition.companyName = this.$route.query.companyName
+    this.queryCondition.companyName = this.$route.query.companyName;
     this.doSearchResult();
-    
   },
+  // 在当前路由改变，但是该组件被复用时调用
   beforeRouteUpdate(to, from, next) {
     next();
     this.doSearchResult();
@@ -95,24 +96,27 @@ export default {
   methods: {
     goCompanyDetail(companyNo) {
       this.$router.push({
-        path: '/companydetail',
+        path: "/companydetail",
         query: {
           companyNo: companyNo
         }
-      })
+      });
     },
     doSearchResult() {
-      companyinfo.queryCompany(
-          this.queryCondition
-      ).then(res=>{
-        if(res.data.isSuccess){
-            this.tableData = res.data.data.entities;
-            this.entityCount =  res.data.data.entityCount;
-        }else{
-         this.$Message.info({
-                content: res.data.msg,
-                duration: 3
-            });
+      queryCompany(this.queryCondition).then(res => {
+        if (res.data.isSuccess) {
+          this.tableData = res.data.data.entities;
+          this.entityCount = res.data.data.entityCount;
+            for (let index in this.tableData) {
+              if(this.tableData[index].tagName) {
+                this.tableData[index].tagList = this.tableData[index].tagName.split(",")
+              }
+            }
+        } else {
+          this.$Message.info({
+            content: res.data.searchText,
+            duration: 3
+          });
         }
       });
     },
@@ -123,14 +127,13 @@ export default {
       let that = this;
       that.goUrl(e);
     },
-    searchCompany(searchText){
-      console.log("searchText");
-      console.log(searchText);
+    mainSearch(searchText) {
       this.queryCondition.companyName = searchText;
       this.doSearchResult();
     },
-    changePage(currentNo){
-      this.queryCondition.pageNo = currentNo
+    changePage(currentNo) {
+      console.log(currentNo)
+      this.queryCondition.pageNo = currentNo;
       this.doSearchResult();
     }
   }
@@ -138,7 +141,6 @@ export default {
 </script>
 <style lang="less" scoped>
 .search-page {
-  
 }
 .tab-pane-class {
   padding-left: 108px;
@@ -214,5 +216,4 @@ export default {
   padding: 5px 4px;
   /* margin-right: 0; */
 }
-
 </style>

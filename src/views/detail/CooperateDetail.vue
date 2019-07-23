@@ -19,7 +19,8 @@
 </template>
 <script>
 import Main from "@/components/main";
-import cooperate from "@/api/cooperate"
+// import cooperate from "@/api/cooperate"
+import { getCooperateDetail } from '@/services';
 import { constants } from 'crypto';
 export default {
     data() {
@@ -57,7 +58,7 @@ export default {
 
   methods: {
       getCooperateDetail(){
-          cooperate.getCooperateDetail(this.queryCondition).then(res=>{
+          getCooperateDetail(this.queryCondition).then(res=>{
               if(res.data.isSuccess){
                   console.log("成功");
                   console.log(res.data.data);

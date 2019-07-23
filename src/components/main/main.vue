@@ -3,14 +3,21 @@
     <Layout>
       <Header class="header-con">
         <div class="header-bar customize-container-center">
-          <SearchBar @doSearch="mainSearch" v-if="searchBar"></SearchBar>
+          <div class="home-search-bar">
+            <div class="container">
+              <img class="logo" src="@/assets/img/logo-search.png" @click="goHome" />
+              <input class="input-search" v-model="searchText" @keydown.enter="doSearch" />
+              <button class="btn-search" @click="mainSearch">
+                <Icon type="ios-search" />
+              </button>
+            </div>
+          </div>
           <div class="custom-content-con">
             <user
               :message-unread-count="unreadCount"
               :nickName="userNickName"
               :user-avatar="userAvatar"
             />
-            <TabPane @on-select="onSelect(e)" v-if="tabPane"></TabPane>
           </div>
         </div>
       </Header>
@@ -28,7 +35,6 @@
 <script>
 import User from "./components/user";
 import ABackTop from "./components/a-back-top";
-import SearchBar from "./components/search-bar";
 import TabPane from "./components/tab-pane";
 
 import "./main.less";
@@ -37,23 +43,18 @@ export default {
   components: {
     User,
     ABackTop,
-    SearchBar,
     TabPane
   },
   data() {
     return {
-      e:""
+      e: ""
     };
   },
   props: {
-    searchBar: {
-      type: Boolean,
-      default: false
+    searchText: {
+      type: String,
+      default: ""
     },
-    tabPane: {
-      type: Boolean,
-      default: false
-    }
   },
   computed: {
     userAvatar() {
@@ -71,33 +72,77 @@ export default {
   },
   methods: {
     mainSearch(searchText) {
-      this.$emit("mainSearch", searchText)
+      this.$emit("mainSearch", searchText);
     },
-    onSelect(e) {
-      this.$emit("onSelect", e)
+
+    goHome() {
+      this.$router.push("/");
     }
   },
-  mounted() {
-    
-  }
+  mounted() {}
 };
 </script>
 <style lang="less">
-.header-bar{
+.header-bar {
   width: 100%;
   height: 100%;
   position: relative;
-  .custom-content-con{
+  .custom-content-con {
     float: right;
     height: auto;
     padding-right: 20px;
     line-height: 56px;
-    & > *{
+    & > * {
       float: right;
     }
   }
 }
-
-
-
+</style>
+<style lang="less" scoped>
+.home-search-bar {
+  // display: inline-block;
+  float: left;
+  // width: 300px;
+  height: 56px;
+  line-height: 56px;
+}
+.container {
+  width: 100%;
+  height: 100%;
+}
+.logo {
+  // height: 26px;
+  cursor: pointer;
+  width: 120px;
+  vertical-align: middle;
+  margin-right: 20px;
+}
+.input-search {
+  outline: none;
+  width: 300px;
+  height: 30px;
+  line-height: 30px;
+  box-sizing: border-box;
+  border: 1px solid #32beff;
+  // vertical-align: top;
+  vertical-align: middle;
+  font-size: 1.2em;
+  // border-radius: 5px 0 0 5px;
+  padding: 6px;
+}
+.btn-search {
+  outline: none;
+  cursor: pointer;
+  width: 50px;
+  height: 30px;
+  line-height: 30px;
+  box-sizing: border-box;
+  background-color: #32beff;
+  // vertical-align: top;
+  vertical-align: middle;
+  color: #fff;
+  font-size: 2.4em;
+  border: none;
+  // border-radius: 0 5px 5px 0;
+}
 </style>

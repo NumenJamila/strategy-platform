@@ -5,9 +5,9 @@
         <div class="header-bar">
           <div class="custom-content-con">
             <user
-              :message-unread-count="unreadCount"
-              :nickName="userNickName"
-              :user-avatar="userAvatar"
+              :message-unread-count="2"
+              nickName="NickName"
+              user-avatar=""
             />
             <Menu
               mode="horizontal"
@@ -28,7 +28,7 @@
             <div class="home">
               <div class="search-logo-wrapper">
                 <MySearchLogo class="my-search-logo"></MySearchLogo>
-                <HomeSearchBar @click="searchCompany" class="home-search-bar"></HomeSearchBar>
+                <HomeSearchBar @doSearch="doSearch" class="home-search-bar"></HomeSearchBar>
               </div>
               <div class="layout-footer-center">
                 <div class="qrCode">
@@ -56,8 +56,17 @@ export default {
     MySearchLogo,
     HomeSearchBar,
     User,
+  },
+ methods: {
+    doSearch(searchText) {
+       this.$router.push({
+        path: '/searchCompany',
+        query: {
+          companyName: searchText
+        }
+      })
+    }
   }
- 
 };
 </script>
 
