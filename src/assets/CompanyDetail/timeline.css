@@ -12,6 +12,7 @@ scroll：裁剪内容 - 提供滚动机制。*/
   white-space: nowrap;
   overflow-x: hidden;
   background-color: #eee;
+  width: 100%;
 }
 
 .timeline ol {
