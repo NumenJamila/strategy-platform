@@ -96,7 +96,7 @@ export default {
   methods: {
     goCompanyDetail(companyNo) {
       this.$router.push({
-        path: "/companydetail",
+        path: "/companybase",
         query: {
           companyNo: companyNo
         }

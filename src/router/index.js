@@ -46,11 +46,43 @@ export default new Router({
 			path: '/searchreport',
 			component: () => import('@/views/search/SearchReport'),
 		},
+
+
+		//公司详情页面
 		{
-			name: 'CompanyDetail',
-			path: '/companydetail',
-			component: () => import('@/views/detail/CompanyDetail'),
+			name: 'CompanyAppraise',
+			path: '/companyappraise',
+			component: () => import('@/views/detail/Company/CompanyAppraise'),
 		},
+		{
+			name: 'CompanyBase',
+			path: '/companybase',
+			component: () => import('@/views/detail/Company/CompanyBase'),
+		},
+		{
+			name: 'CompanyCooperate',
+			path: '/companycooperate',
+			component: () => import('@/views/detail/Company/CompanyCooperate'),
+		},
+		{
+			name: 'CompanyNavigation',
+			path: '/companynavigation',
+			component: () => import('@/views/detail/Company/CompanyNavigation'),
+		},
+		{
+			name: 'CorporateAffiliation',
+			path: '/corporateaffiliation',
+			component: () => import('@/views/detail/Company/CorporateAffiliation'),
+		},
+		{
+			name: 'CorporateInvestmentFinance',
+			path: '/corporateinvestmentfinance',
+			component: () => import('@/views/detail/Company/CorporateInvestmentFinance'),
+		},
+		
+
+		//公司详情页面
+
 		{
 			name: 'NotMatch',
 			path: '*',

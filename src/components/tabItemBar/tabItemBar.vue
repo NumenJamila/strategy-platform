@@ -1,6 +1,6 @@
 <template>
   <Tabs @on-click="tabClick" :value="whichItem">
-        <TabPane label="全部" name="Search"></TabPane>
+        <!-- <TabPane label="全部" name="Search"></TabPane> -->
         <TabPane label="公司" name="SearchCompany"></TabPane>
         <TabPane label="行业" name="SearchIndustry"></TabPane>
         <TabPane label="区域" name="SearchRegion"></TabPane>

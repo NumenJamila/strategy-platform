@@ -1,4 +1,6 @@
 <template>
+<div style="width: 600px;">
+
   <section class="timeline">
             <ol>
 
@@ -65,6 +67,7 @@
                 </button>
             </div>
         </section>
+</div>
 </template>
 <script>
 
@@ -249,7 +252,7 @@ overflow-x: hidden;
 .timeline ol {
 font-size: 0;
 padding: 250px 0;
-width: 100vw;
+width: 100%;
 transition: all 1s;
 }
 .timeline ol li {

@@ -62,11 +62,11 @@ export default {
       return "";
     },
     userNickName() {
-      return "nickName";
+      return "";
     },
 
     unreadCount() {
-      return 2;
+      return 0;
       // return this.$store.state.user.unreadCount;
     }
   },
