@@ -196,7 +196,7 @@ export default {
   min-width: 600px;
   min-height: 300px;
   border-radius: 8px;
-  margin: 20px;
+  // margin: 20px;
   padding: 20px;
 }
 table {
@@ -223,26 +223,6 @@ table {
   vertical-align: middle;
 }
 
-.border-up-empty {
-  width: 0;
-  height: 0;
-  border-left: 30px solid transparent;
-  border-right: 30px solid transparent;
-  border-bottom: 30px solid #333;
-  position: relative;
-  margin: 50px auto;
-}
-.border-up-empty span {
-  display: block;
-  width: 0;
-  height: 0;
-  border-left: 28px solid transparent;
-  border-right: 28px solid transparent;
-  border-bottom: 28px solid #f0981c;
-  position: absolute;
-  left: -28px;
-  top: 2px;
-}
 .detail-right {
   border-left: 1px solid #e1e1e1;
   width: 384px;
@@ -318,7 +298,7 @@ table {
   content: "";
   display: block;
   position: absolute;
-  bottom: -16px;
+  bottom: -11px;
   left: 50%;
   transform: translateX(-50%);
   width: 0px;

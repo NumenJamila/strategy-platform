@@ -3,7 +3,7 @@
     <div class="search-page customize-container-center">
       <!-- <div class="tab-pane-title">{{this.queryCondition.informationName}}</div>  -->
       <tabItemBar :whichItem="whichItem" @tabClick="tabClick"></tabItemBar>
-      <Tabs type="card" class="ivu-tabs-bar-update" @on-click="typeChange" >
+      <Tabs type="card" class="ivu-tabs-bar-update" @on-click="typeChange">
         <TabPane label="最新资讯">
           <div class="wrapper">
             <div class="container">
@@ -18,7 +18,13 @@
             </div>
             <div style="margin: 10px;overflow: hidden">
               <div style="float: right;">
-                <Page :total="entityCount" show-elevator show-total :current="1" @on-change="changePage"></Page>
+                <Page
+                  :total="entityCount"
+                  show-elevator
+                  show-total
+                  :current="1"
+                  @on-change="changePage"
+                ></Page>
               </div>
             </div>
           </div>
@@ -37,11 +43,16 @@
             </div>
             <div style="margin: 10px;overflow: hidden">
               <div style="float: right;">
-                <Page :total="entityCount" show-elevator show-total :current="1" @on-change="changePage"></Page>
+                <Page
+                  :total="entityCount"
+                  show-elevator
+                  show-total
+                  :current="1"
+                  @on-change="changePage"
+                ></Page>
               </div>
             </div>
           </div>
-
         </TabPane>
       </Tabs>
       <div class="other-project">
@@ -58,7 +69,12 @@
               <div v-for="info in collectData" :key="info.id">
                 <div class="project-item">
                   <img src="https://avatar.csdn.net/1/2/3/3_liu_liu57.jpg" alt />
-                  <div><a class="project-item-name" @click="getCollectOrHistoryInformationDetail(info.informationId)">{{info.informationName}}</a></div>
+                  <div>
+                    <a
+                      class="project-item-name"
+                      @click="getCollectOrHistoryInformationDetail(info.informationId)"
+                    >{{info.informationName}}</a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -75,8 +91,13 @@
               <div v-for="info in historyData" :key="info.id">
                 <div class="project-item">
                   <img src="https://avatar.csdn.net/1/2/3/3_liu_liu57.jpg" alt />
-                  <div><a class="project-item-name" @click="getCollectOrHistoryInformationDetail(info.informationId)">{{info.informationName}}</a></div>
-                 </div>
+                  <div>
+                    <a
+                      class="project-item-name"
+                      @click="getCollectOrHistoryInformationDetail(info.informationId)"
+                    >{{info.informationName}}</a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -91,10 +112,14 @@
 import Main from "@/components/main";
 import tabItemBar from "@/components/tabItemBar";
 import SearchResultItem from "@/components/searchBar/SearchResultItem.vue";
-import { queryInformation, collected, queryCollectedAndHistory } from '@/services';
+import {
+  queryInformation,
+  collected,
+  queryCollectedAndHistory
+} from "@/services";
 // import information from "@/api/information";
 // import collect from "@/api/collect";
-import { constants } from 'crypto';
+import { constants } from "crypto";
 
 export default {
   data() {
@@ -107,34 +132,32 @@ export default {
           title: "名称",
           key: "informationName",
           width: 300,
-          render:(h,params) =>{
-            return h("div",[
-               h(
-                 'a',
-                
-                  {
-                     style:{
-                       color:"#515a6e"
-                   },
-                    on: { click: () => {
-                        this.GetInformationDetail(params.row.informationId);
-                      },
+          render: (h, params) => {
+            return h("div", [
+              h(
+                "a",
+
+                {
+                  on: {
+                    click: () => {
+                      this.GetInformationDetail(params.row.informationId);
                     }
-                  },
-                  params.row.informationName
-               )
-            ])
+                  }
+                },
+                params.row.informationName
+              )
+            ]);
           }
         },
         {
           title: "来源",
           key: "source",
-          width: 100,
+          width: 100
         },
         {
           title: "时间",
           key: "createTime",
-          width: 160,
+          width: 160
         },
         {
           title: "操作",
@@ -142,53 +165,13 @@ export default {
           width: 200,
           align: "left",
           render: (h, params) => {
-            if(params.row.informationType == 1){
-                return h("div", [
-                h(
-                  "Button",
-                  {
-                    props: {
-                      type: params.row.collect? 'error' : 'primary',
-                      size: "small"
-                    },
-                    style: {
-                      marginRight: "5px"
-                    },
-                    on: {
-                      click: () => {
-                        this.collectInformation(params.index);
-                      }
-                    }
-                  },
-                
-                  params.row.collect?"已收藏":"收藏"
-                )
-              ])
-            }else{
+            if (params.row.informationType == 1) {
               return h("div", [
-               h(
-                "Button",
-                {
-                  props: {
-                    type: 'primary',
-                    size: "small"
-                  },
-                  style: {
-                    marginRight: "5px"
-                  },
-                  on: {
-                    click: () => {
-                      this.downLoadFile(params.index);
-                    }
-                  }
-                 },
-                 "下载"
-               ),
                 h(
                   "Button",
                   {
                     props: {
-                      type: params.row.collect? 'error' : 'primary',
+                      type: params.row.collect ? "error" : "primary",
                       size: "small"
                     },
                     style: {
@@ -200,35 +183,74 @@ export default {
                       }
                     }
                   },
-                
-                  params.row.collect?"已收藏":"收藏"
+
+                  params.row.collect ? "已收藏" : "收藏"
                 )
-              ],
-              )
+              ]);
+            } else {
+              return h("div", [
+                h(
+                  "Button",
+                  {
+                    props: {
+                      type: "primary",
+                      size: "small"
+                    },
+                    style: {
+                      marginRight: "5px"
+                    },
+                    on: {
+                      click: () => {
+                        this.downLoadFile(params.index);
+                      }
+                    }
+                  },
+                  "下载"
+                ),
+                h(
+                  "Button",
+                  {
+                    props: {
+                      type: params.row.collect ? "error" : "primary",
+                      size: "small"
+                    },
+                    style: {
+                      marginRight: "5px"
+                    },
+                    on: {
+                      click: () => {
+                        this.collectInformation(params.index);
+                      }
+                    }
+                  },
+
+                  params.row.collect ? "已收藏" : "收藏"
+                )
+              ]);
             }
           }
-        },
+        }
       ],
-      
+
       informationData: [],
       reportData: [],
-      historyData:[],
-      collcetData:[],
-      queryCondition:{
+      historyData: [],
+      collcetData: [],
+      queryCondition: {
         pageNo: 1,
-        pageSize:8,
-        informationName:"",
-        informationType:1
+        pageSize: 8,
+        informationName: "",
+        informationType: 1
       },
-      collected:{
-        collectName:"",
-        collectedType:"",
-        collectId:""
+      collected: {
+        collectName: "",
+        collectedType: "",
+        collectId: ""
       },
-      entityCount:1,
+      entityCount: 1,
       tabIndex: 0,
-      queryCollectAndHistoryCondition:{
-        type:2
+      queryCollectAndHistoryCondition: {
+        type: 2
       }
     };
   },
@@ -238,11 +260,11 @@ export default {
     tabItemBar
   },
   created() {
-    this.queryCondition.informationName = this.msg;
+    this.queryCondition.informationName = this.msg || "";
     this.doSearchResult();
     this.queryCollectAndHistory();
   },
-  
+
   beforeRouteUpdate(to, from, next) {
     next();
     this.doSearchResult();
@@ -250,33 +272,34 @@ export default {
   },
   methods: {
     doSearchResult() {
-      queryInformation(this.queryCondition).then(res=>{
-        if(res.data.isSuccess){
-          this.informationData = res.data.information.entities;
-          this.entityCount = res.data.information.entityCount;
-        }else{
-           this.$Message.info({
-                content: res.data.msg,
-                duration: 3
-            });
+      queryInformation(this.queryCondition).then(res => {
+        if (res.data.isSuccess) {
+          this.informationData = res.data.data.information.entities;
+          this.entityCount = res.data.data.information.entityCount;
+        } else {
+          this.$Message.info({
+            content: res.data.msg,
+            duration: 3
+          });
         }
-      })
+      });
     },
-    queryCollectAndHistory(){
-      queryCollectedAndHistory(this.queryCollectAndHistoryCondition).then(res =>{
-        if(res.data.isSuccess){
-            this.historyData = res.data.historyList;
+    queryCollectAndHistory() {
+      queryCollectedAndHistory(this.queryCollectAndHistoryCondition).then(
+        res => {
+          if (res.data.isSuccess) {
+            this.historyData = res.data.data.historyList;
             console.log(this.historyData);
-            this.collectData = res.data.collectList;
+            this.collectData = res.data.data.collectList;
             console.log(this.collectData);
-        }else{
-          this.$Message.info(
-            {
+          } else {
+            this.$Message.info({
               content: res.data.msg,
               duration: 3
-            }
-          )}
-      })
+            });
+          }
+        }
+      );
     },
     goUrl(url) {
       this.$router.push({ name: url });
@@ -286,94 +309,94 @@ export default {
       that.goUrl(e);
     },
     //查找资讯信息
-    searchInformation(searchText){
+    searchInformation(searchText) {
+      console.log(searchText)
       this.queryCondition.informationName = searchText;
       this.doSearchResult();
     },
 
-    GetInformationDetail(informationId){
-     this.$router.push({
-        path: '/informationDetail',
+    GetInformationDetail(informationId) {
+      this.$router.push({
+        path: "/informationDetail",
         query: {
           informationId: informationId
         }
-      })
+      });
     },
-    getCollectOrHistoryInformationDetail(params){
+    getCollectOrHistoryInformationDetail(params) {
       this.$router.push({
-        path:'/informationDetail',
-        query:{
+        path: "/informationDetail",
+        query: {
           informationId: params
         }
-      })
+      });
     },
 
     //更换tab时，切换资讯信息的type
-    typeChange(e){
-      if(this.tabIndex == e){
+    typeChange(e) {
+      if (this.tabIndex == e) {
         return;
       }
-      this.tabIndex =e;
-      if(this.queryCondition.informationType == 1){
-          this.queryCondition.informationType = 2;
-          this.queryCollectAndHistoryCondition.type = 3;
-        }else{
-          this.queryCondition.informationType = 1;
-          this.queryCollectAndHistoryCondition.type = 2;
-        }
-        this.queryCondition.pageNo = 1;
-        this.doSearchResult();
-        this.queryCollectAndHistory();
+      this.tabIndex = e;
+      if (this.queryCondition.informationType == 1) {
+        this.queryCondition.informationType = 2;
+        this.queryCollectAndHistoryCondition.type = 3;
+      } else {
+        this.queryCondition.informationType = 1;
+        this.queryCollectAndHistoryCondition.type = 2;
+      }
+      this.queryCondition.pageNo = 1;
+      this.doSearchResult();
+      this.queryCollectAndHistory();
     },
     //换页请求数据
-    changePage(currentNo){
-      this.queryCondition.pageNo = currentNo
+    changePage(currentNo) {
+      this.queryCondition.pageNo = currentNo;
       this.doSearchResult();
-     
     },
     //收藏操作，点击收藏，再点击取消收藏
-    collectInformation(params){
+    collectInformation(params) {
       this.collected.collectId = this.informationData[params].informationId;
       this.collected.collectName = this.informationData[params].informationName;
-      if(this.informationData[params].informationType == 1){
+      if (this.informationData[params].informationType == 1) {
         this.collected.collectedType = 2;
-      }else{
+      } else {
         this.collected.collectedType = 3;
       }
 
-      collected(this.collected).then(res=>{
-          if(res.data.isSuccess){
-            if(res.data.isCollect){
-              //图标改成已收藏
-              this.informationData[params].collect = true;
-            }else{
-              //图标改成收藏
-              this.informationData[params].collect = false;
-            }
-            this.$Message.info({
-                  content: res.data.msg,
-                  duration: 3
-              });
-          }else{
-            this.$Message.info({
-                  content: res.data.msg,
-                  duration: 3
-              });
+      collected(this.collected).then(res => {
+        if (res.data.isSuccess) {
+          if (res.data.data.isCollect) {
+            //图标改成已收藏
+            this.informationData[params].collect = true;
+          } else {
+            //图标改成收藏
+            this.informationData[params].collect = false;
           }
-      })
-  },
-  getMoreCollect(){
+          this.$Message.info({
+            content: res.data.data.msg,
+            duration: 3
+          });
+        } else {
+          this.$Message.info({
+            content: res.data.msg,
+            duration: 3
+          });
+        }
+      });
+    },
+    getMoreCollect() {
       this.$router.push({
-        path:"/collected",
-      })
-  },
-  getMoreHistory(){
-    this.$router.push({
-        path:"/history",
-      })
+        path: "/collected"
+      });
+    },
+    getMoreHistory() {
+      this.$router.push({
+        path: "/history"
+      });
     }
   }
-}
+};
 </script>
 <style lang="less">
 .ivu-tabs-bar-update {

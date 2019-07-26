@@ -6,7 +6,7 @@
           <div class="home-search-bar">
             <div class="container">
               <img class="logo" src="@/assets/img/logo-search.png" @click="goHome" />
-              <input class="input-search" v-model="searchText" @keydown.enter="doSearch" />
+              <input class="input-search" v-model="searchText" @keydown.enter="mainSearch" />
               <button class="btn-search" @click="mainSearch">
                 <Icon type="ios-search" />
               </button>
@@ -71,10 +71,9 @@ export default {
     }
   },
   methods: {
-    mainSearch(searchText) {
-      this.$emit("mainSearch", searchText);
+    mainSearch() {
+      this.$emit("mainSearch", this.searchText);
     },
-
     goHome() {
       this.$router.push("/");
     }

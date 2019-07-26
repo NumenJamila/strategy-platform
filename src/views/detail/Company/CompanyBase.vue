@@ -273,7 +273,7 @@ export default {
   min-width: 600px;
   min-height: 300px;
   border-radius: 8px;
-  margin: 20px;
+  // margin: 20px;
   padding: 20px;
 }
 table {
@@ -375,7 +375,7 @@ table {
   content: "";
   display: block;
   position: absolute;
-  bottom: -16px;
+  bottom: -11px;
   left: 50%;
   transform: translateX(-50%);
   width: 0px;
